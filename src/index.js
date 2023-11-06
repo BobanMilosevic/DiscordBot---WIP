@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { Client, IntentsBitField, SlashCommandBuilder, VoiceChannel } = require('discord.js')
+const { joinVoiceChannel } = require('@discordjs/voice');
 
 const client = new Client({
     intents: [
@@ -41,29 +42,35 @@ client.on('interactionCreate', (interaction) => {
     }
     
     if (interaction.commandName === 'präsentation') {
-        const voiceChannel = interaction.member.voice.channel;
-        
-        /*if (!voiceChannel) {
+        interaction.reply("Vortrag über Discord: Moderne Kommunikation in der Digitalen Welt - Liebe Zuhörerinnen und Zuhörer, Discord, im Jahr 2015 von Jason Citron und Stan Vishnevskiy gegründet, hat sich von seiner ursprünglichen Rolle als Kommunikationsplattform für Gamer zu einer vielseitigen und universellen Lösung entwickelt. Discord bietet eine Fülle von Funktionen, darunter Sprach- und Videoanrufe, Textnachrichten, Server und Kanäle, Bots und Erweiterungen sowie integrierte Spielefunktionen. Dies macht Discord zu einer äußerst vielseitigen Plattform, die in zahlreichen Bereichen Anwendung findet. Die Anwendungsbereiche von Discord sind breit gefächert. In der Bildung nutzen Lehrer und Schüler Discord für virtuellen Unterricht und Gruppenarbeit. Unternehmen setzen Discord für Teamkommunikation und Videokonferenzen ein. Online-Communities, sei es für Hobbys, Interessen oder Fanclubs, finden auf Discord ihren Treffpunkt. Die Plattform wird auch für die Organisation von Veranstaltungen und Konferenzen verwendet. Künstler, Streamer und Content-Ersteller verwenden Discord, um mit ihren Fans und Zuschauern in Kontakt zu treten.In der Schlussfolgerung lässt sich sagen, dass Discord die Art und Weise, wie wir online kommunizieren, nachhaltig verändert hat. Als vielseitige Plattform hat sie in den Bereichen Bildung, Geschäftswelt, Gemeinschaften, Veranstaltungen und Unterhaltung einen wichtigen Platz eingenommen. Es wird spannend sein zu beobachten, wie Discord in den kommenden Jahren weiterhin unsere Kommunikation beeinflusst. Vielen Dank für Ihre Aufmerksamkeit, und ich stehe Ihnen gerne für Fragen zur Verfügung.")
+    }   
+   /*     if (!voiceChannel) {
             interaction.reply('Du musst in einem Voice-Channel sein, um die Präsentation zu starten.');
             return;
-        }*/
+        }
         //TODO: Text einfügen
         const presentationText = ' ';
         
         voiceChannel
-        .join()
-        /*.then((connection) => {
+        .joinVoiceChannel()
+        .then((connection) => {
             
             const dispatcher = connection.play(presentationText);
-            dispatcher.on('finish', () => {
-                voiceChannel.leave
+
+            dispatcher.on('start', () => {
+                interaction.reply(`Die Präsentation wurde im Voice-Channel gestartet: %{voiceChannel.name}`); 
             });
-        })
-        .catch(console.error);*/
-        
-        interaction.reply(`Die Präsentation wurde im Voice-Channel gestartet: %{voiceChannel.name}`);
-        }
+
+            dispatcher.on('finish', () => {
+                connection.leave();
+            });
+
+            dispatcher.on('error', (error) => {
+                console.error('Fehler beim starten der Präsentation:', error);
+                interaction.reply('Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut.');
+            });
+        });
+
+        client.join();*/
 });
-
-
 client.login(process.env.TOKEN);

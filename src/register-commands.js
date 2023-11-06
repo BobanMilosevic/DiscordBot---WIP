@@ -16,7 +16,7 @@ const commands = [
     },
     {
         name: 'präsentation',
-        description: 'Tritt dem Voice-channel bei!'
+        description: 'Gibt die Präsentation aus!'
     }
 ];
 
