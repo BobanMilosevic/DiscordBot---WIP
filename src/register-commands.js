@@ -17,6 +17,31 @@ const commands = [
     {
         name: 'präsentation',
         description: 'Gibt die Präsentation aus!'
+    },
+    {
+        name: 'konvertiere',
+        description: 'Konvertiert zwischen den Zahlensystemen!',
+        type: 1,
+        options : [
+            {
+                name: 'kategorie',
+                description: 'Wähle zwischen den Zahlensystemen aus',
+                type: 3,
+                required: true,
+                choices: [
+                   { name: 'BinärZuDezimal', value: '0'},
+                   { name : 'DezimalZuBinär', value: '1'},
+                   { name: 'DezimalZuHex', value: '2'},
+                   {name: 'BinärZuHex', value: '3'},
+                ],
+            },
+            {
+                name: 'input',
+                description: 'Nummer die Konvertiert werden soll',
+                type: 3,
+                required: true,
+            }
+        ]
     }
 ];
 
